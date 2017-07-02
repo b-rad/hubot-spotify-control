@@ -26,14 +26,18 @@ class InterfaceFetcher {
     }
 
     setSessionDbusAddress() {
-        return this
-            .getPid()
-            .then(pid => fs.readFileAsync('/proc/' + pid + '/environ', { encoding: 'utf-8' }))
-            .then(file => {
-                let fixedfile = file.replace(/\0/g, '\n');
-                let parsed = properties.parse(fixedfile, { strict: true });
-                process.env['DBUS_SESSION_BUS_ADDRESS'] = parsed['DBUS_SESSION_BUS_ADDRESS'];
-            });
+        
+        // HACK:    This isn't working as Spotify isn't setting the DBUS environment variable.
+        //          Instead we'll just default to the session of hubot.
+        // return this
+        //    .getPid()
+        //    .then(pid => fs.readFileAsync('/proc/' + pid + '/environ', { encoding: 'utf-8' }))
+        //    .then(file => {
+        //        let fixedfile = file.replace(/\0/g, '\n');
+        //        let parsed = properties.parse(fixedfile, { strict: true });
+        //        process.env['DBUS_SESSION_BUS_ADDRESS'] = parsed['DBUS_SESSION_BUS_ADDRESS'];
+        //    });
+        return this;
     };
 
     getInterface() {
