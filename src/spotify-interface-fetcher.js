@@ -31,15 +31,11 @@ class InterfaceFetcher {
     };
 
     getInterface() {
-        return this
-            .setSessionDbusAddress()
-            .then(() => {
-                return Promise.fromCallback(callback => {
-                    dbus
-                       .sessionBus()
-                        .getService(this.service)
-                        .getInterface(this.path, this.memb, callback);
-                });
+        return Promise.fromCallback(callback => {
+            dbus
+                .sessionBus()
+                .getService(this.service)
+                .getInterface(this.path, this.memb, callback);
             });
     }
 }
